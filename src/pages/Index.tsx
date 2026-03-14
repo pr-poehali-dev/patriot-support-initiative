@@ -83,6 +83,7 @@ export default function Index() {
   const [copied2, setCopied2] = useState(false);
   const [copiedPurpose, setCopiedPurpose] = useState(false);
   const [showQr, setShowQr] = useState(false);
+  const [showRekvizity, setShowRekvizity] = useState(false);
   const [activeAmount, setActiveAmount] = useState("500 ₽");
 
   const amountDescs: Record<string, string> = {
@@ -426,7 +427,39 @@ export default function Index() {
               <h3 style={{ fontSize: "1rem", marginBottom: 16 }}>Выберите удобный способ перевода</h3>
               <PayRow icon="💳" label="Перевод по номеру карты" value="5228 6005 8695 8904" onAction={() => copyToClipboard("5228 6005 8695 8904", setCopied1)} actionLabel={copied1 ? "✅ Скопировано" : "Копировать"} />
               <PayRow icon="📲" label="СБП — по номеру телефона (любой банк)" value="+7-908-451-53-85" onAction={() => copyToClipboard("+79084515385", setCopied2)} actionLabel={copied2 ? "✅ Скопировано" : "Копировать"} />
-              <PayRow icon="🏦" label="Расчётный счёт организации" value="Реквизиты — в VK" onAction={() => window.open("https://vk.ru/patriotdvprim", "_blank")} actionLabel="Запросить →" />
+              <div style={{ background: "var(--light)", borderRadius: 10, padding: "14px 16px", marginBottom: 12 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <span style={{ fontSize: "1.4rem", flexShrink: 0 }}>🏦</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: "0.78rem", color: "var(--muted)" }}>Расчётный счёт организации</div>
+                    <div style={{ fontSize: "0.88rem", fontWeight: 700 }}>Реквизиты</div>
+                  </div>
+                  <button onClick={() => setShowRekvizity(!showRekvizity)} style={{ marginLeft: "auto", background: showRekvizity ? "var(--red)" : "var(--white)", border: `1px solid ${showRekvizity ? "var(--red)" : "var(--border)"}`, padding: "5px 10px", borderRadius: 6, cursor: "pointer", fontSize: "0.72rem", color: showRekvizity ? "#fff" : "var(--muted)", flexShrink: 0, fontFamily: "inherit", transition: "all .2s" }}>
+                    {showRekvizity ? "Скрыть" : "Показать"}
+                  </button>
+                </div>
+                {showRekvizity && (
+                  <div style={{ marginTop: 14, background: "var(--white)", borderRadius: 8, padding: "14px 16px", fontSize: "0.82rem", lineHeight: 1.9 }}>
+                    {[
+                      ["Наименование", 'АНО "ПАТРИОТ ДВ"'],
+                      ["ИНН", "2502079223"],
+                      ["КПП", "250201001"],
+                      ["ОГРН", "1242500028583"],
+                      ["Расчётный счёт", "40703810850000004163"],
+                      ["Банк", "ДАЛЬНЕВОСТОЧНЫЙ БАНК ПАО СБЕРБАНК"],
+                      ["БИК банка", "040813608"],
+                      ["Корсчёт", "30101810600000000608"],
+                      ["ИНН банка", "7707083893"],
+                      ["КПП банка", "254002002"],
+                    ].map(([k, v]) => (
+                      <div key={k} style={{ display: "flex", gap: 8, borderBottom: "1px solid var(--border)", padding: "4px 0" }}>
+                        <span style={{ color: "var(--muted)", minWidth: 140, flexShrink: 0 }}>{k}</span>
+                        <span style={{ fontWeight: 600, fontFamily: "monospace", wordBreak: "break-all" }}>{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
               <div style={{ background: "var(--light)", borderRadius: 10, padding: "14px 16px", marginBottom: 12 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <span style={{ fontSize: "1.4rem", flexShrink: 0 }}>📷</span>
