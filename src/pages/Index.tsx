@@ -496,6 +496,19 @@ export default function Index() {
               <h5>Контакты и отчёты</h5>
               <a href="https://vk.ru/patriotdvprim" target="_blank" rel="noopener noreferrer">Сообщество ВКонтакте →</a>
               <p>Телефон: +7-908-451-53-85</p>
+              <div style={{ marginTop: 16, borderTop: "1px solid rgba(255,255,255,.08)", paddingTop: 14 }}>
+                <h5 style={{ marginBottom: 10 }}>Организаторы</h5>
+                {[
+                  { name: "Алексей Викторович Михайленко", role: "Председатель общественной организации ветеранов территориального управления шахты «Амурская», г. Артём" },
+                  { name: "Ольга Николаевна Таланова", role: "Индивидуальный предприниматель, г. Владивосток" },
+                  { name: "Марина Викторовна Казакова", role: "Общественный деятель, г. Артём" },
+                ].map(({ name, role }) => (
+                  <div key={name} style={{ marginBottom: 12 }}>
+                    <span style={{ display: "block", fontSize: "0.78rem", color: "rgba(255,255,255,.75)", fontWeight: 600 }}>{name}</span>
+                    <span style={{ display: "block", fontSize: "0.7rem", color: "rgba(255,255,255,.38)", lineHeight: 1.4 }}>{role}</span>
+                  </div>
+                ))}
+              </div>
               <p style={{ marginTop: 10, fontSize: "0.72rem", color: "rgba(255,255,255,.3)" }}>
                 Финансовая отчётность публикуется в открытом доступе в соответствии с требованиями законодательства РФ.
               </p>
