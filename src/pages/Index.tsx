@@ -84,6 +84,8 @@ export default function Index() {
   const [copiedPurpose, setCopiedPurpose] = useState(false);
   const [showQr, setShowQr] = useState(false);
   const [showRekvizity, setShowRekvizity] = useState(false);
+  const [copiedRekv, setCopiedRekv] = useState(false);
+  const REKVIZITY = `Наименование: АНО "ПАТРИОТ ДВ"\nИНН: 2502079223\nКПП: 250201001\nОГРН: 1242500028583\nРасчётный счёт: 40703810850000004163\nБанк: ДАЛЬНЕВОСТОЧНЫЙ БАНК ПАО СБЕРБАНК\nБИК банка: 040813608\nКорсчёт: 30101810600000000608\nИНН банка: 7707083893\nКПП банка: 254002002`;
   const [activeAmount, setActiveAmount] = useState("500 ₽");
 
   const amountDescs: Record<string, string> = {
@@ -457,6 +459,9 @@ export default function Index() {
                         <span style={{ fontWeight: 600, fontFamily: "monospace", wordBreak: "break-all" }}>{v}</span>
                       </div>
                     ))}
+                    <button onClick={() => copyToClipboard(REKVIZITY, setCopiedRekv)} style={{ marginTop: 12, display: "block", width: "100%", textAlign: "center", padding: "8px", background: copiedRekv ? "#E8F5E9" : "var(--light)", border: `1px solid ${copiedRekv ? "#A5D6A7" : "var(--border)"}`, borderRadius: 6, cursor: "pointer", fontSize: "0.78rem", fontFamily: "inherit", color: copiedRekv ? "#2E7D32" : "var(--text)", transition: "all .2s" }}>
+                      {copiedRekv ? "✅ Реквизиты скопированы" : "📋 Скопировать все реквизиты"}
+                    </button>
                   </div>
                 )}
               </div>
