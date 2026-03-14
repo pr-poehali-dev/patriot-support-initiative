@@ -82,6 +82,7 @@ export default function Index() {
   const [copied1, setCopied1] = useState(false);
   const [copied2, setCopied2] = useState(false);
   const [copiedPurpose, setCopiedPurpose] = useState(false);
+  const [showQr, setShowQr] = useState(false);
   const [activeAmount, setActiveAmount] = useState("500 ₽");
 
   const amountDescs: Record<string, string> = {
@@ -426,6 +427,24 @@ export default function Index() {
               <PayRow icon="💳" label="Перевод по номеру карты" value="5228 6005 8695 8904" onAction={() => copyToClipboard("5228 6005 8695 8904", setCopied1)} actionLabel={copied1 ? "✅ Скопировано" : "Копировать"} />
               <PayRow icon="📲" label="СБП — по номеру телефона (любой банк)" value="+7-908-451-53-85" onAction={() => copyToClipboard("+79084515385", setCopied2)} actionLabel={copied2 ? "✅ Скопировано" : "Копировать"} />
               <PayRow icon="🏦" label="Расчётный счёт организации" value="Реквизиты — в VK" onAction={() => window.open("https://vk.ru/patriotdvprim", "_blank")} actionLabel="Запросить →" />
+              <div style={{ background: "var(--light)", borderRadius: 10, padding: "14px 16px", marginBottom: 12 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <span style={{ fontSize: "1.4rem", flexShrink: 0 }}>📷</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: "0.78rem", color: "var(--muted)" }}>Оплата по QR-коду</div>
+                    <div style={{ fontSize: "0.88rem", fontWeight: 700 }}>Сканируйте камерой телефона</div>
+                  </div>
+                  <button onClick={() => setShowQr(!showQr)} style={{ marginLeft: "auto", background: showQr ? "var(--red)" : "var(--white)", border: `1px solid ${showQr ? "var(--red)" : "var(--border)"}`, padding: "5px 10px", borderRadius: 6, cursor: "pointer", fontSize: "0.72rem", color: showQr ? "#fff" : "var(--muted)", flexShrink: 0, fontFamily: "inherit", transition: "all .2s" }}>
+                    {showQr ? "Скрыть" : "Показать"}
+                  </button>
+                </div>
+                {showQr && (
+                  <div style={{ marginTop: 14, textAlign: "center" }}>
+                    <img src="https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/e6cb1219-083e-46c8-9daa-44b72721b951.jpg" alt="QR-код для оплаты" style={{ width: 200, height: 200, borderRadius: 8, display: "block", margin: "0 auto" }} />
+                    <p style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: 8 }}>Наведите камеру телефона на QR-код для перехода к оплате</p>
+                  </div>
+                )}
+              </div>
               <div className="pp">
                 <div className="pp-l">⚠️ Обязательное назначение платежа — скопируйте текст</div>
                 <div className="pp-t">{PURPOSE}</div>
