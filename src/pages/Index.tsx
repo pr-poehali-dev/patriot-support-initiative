@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import ReportsBlock from "@/components/ReportsBlock";
 
 /* ── helpers ── */
 function useCountUp(target: number, duration = 1800, active = false) {
@@ -495,6 +496,9 @@ export default function Index() {
           </div>
         </div>
       </div>
+
+      {/* REPORTS */}
+      <ReportsBlock />
 
       {/* FAQ */}
       <div className="sec bg-r">
