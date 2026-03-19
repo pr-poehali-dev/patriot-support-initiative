@@ -546,7 +546,8 @@ export default function Index() {
               <div style={{ marginTop: 14, borderTop: "1px solid rgba(255,255,255,.08)", paddingTop: 14 }}>
                 <h5 style={{ marginBottom: 10 }}>Контакты и отчёты</h5>
                 <a href="https://vk.ru/patriotdvprim" target="_blank" rel="noopener noreferrer">Сообщество ВКонтакте →</a>
-                <p>Телефон: +7-908-451-53-85</p>
+                <p>Телефон: +7-996-424-17-24</p>
+                <p>E-mail: <a href="mailto:ano.patriotdv@mail.ru" style={{ color: "rgba(255,255,255,.5)" }}>ano.patriotdv@mail.ru</a></p>
                 <p style={{ marginTop: 8, fontSize: "0.72rem", color: "rgba(255,255,255,.3)" }}>
                   Финансовая отчётность публикуется в открытом доступе в соответствии с требованиями законодательства РФ.
                 </p>
