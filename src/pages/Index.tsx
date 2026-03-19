@@ -427,8 +427,6 @@ export default function Index() {
             </div>
             <div style={{ background: "var(--white)", borderRadius: 16, padding: 28, boxShadow: "var(--shadow)" }}>
               <h3 style={{ fontSize: "1rem", marginBottom: 16 }}>Выберите удобный способ перевода</h3>
-              <PayRow icon="💳" label="Перевод по номеру карты" value="5228 6005 8695 8904" onAction={() => copyToClipboard("5228 6005 8695 8904", setCopied1)} actionLabel={copied1 ? "✅ Скопировано" : "Копировать"} />
-              <PayRow icon="📲" label="СБП — по номеру телефона (любой банк)" value="+7-908-451-53-85" onAction={() => copyToClipboard("+79084515385", setCopied2)} actionLabel={copied2 ? "✅ Скопировано" : "Копировать"} />
               <div style={{ background: "var(--light)", borderRadius: 10, padding: "14px 16px", marginBottom: 12 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <span style={{ fontSize: "1.4rem", flexShrink: 0 }}>🏦</span>
