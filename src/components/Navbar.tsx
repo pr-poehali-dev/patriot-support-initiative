@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 
 const LINKS = [
-  { t: "Участвовать", to: "#form" },
-  { t: "Миссия",      to: "#mission" },
-  { t: "Форматы",     to: "#directions" },
-  { t: "Отчёты",      to: "#reports" },
-  { t: "Помочь",      to: "#donate" },
-  { t: "FAQ",         to: "#faq" },
+  { t: "Миссия",   to: "#mission" },
+  { t: "Форматы",  to: "#directions" },
+  { t: "Отчёты",   to: "#reports" },
+  { t: "Помочь",   to: "#donate" },
+  { t: "FAQ",      to: "#faq" },
 ];
 
 const DRAWER_LINKS = [
