@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import ReportsBlock from "@/components/ReportsBlock";
+import Navbar from "@/components/Navbar";
 
 /* ── helpers ── */
 function useCountUp(target: number, duration = 1800, active = false) {
@@ -202,25 +203,10 @@ export default function Index() {
         }
       `}</style>
 
-      {/* HEADER */}
-      <header style={{ background: "var(--dark)", padding: "14px 0", position: "sticky", top: 0, zIndex: 100, boxShadow: "0 2px 12px rgba(0,0,0,.3)" }}>
-        <div className="c" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ width: 44, height: 44, background: "var(--red)", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.4rem" }}>🛡</div>
-            <div>
-              <strong style={{ display: "block", fontSize: "1rem", letterSpacing: "0.04em", color: "#fff" }}>ПАТРИОТ ДВ</strong>
-              <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,.55)" }}>АНО · Приморский край</span>
-            </div>
-          </div>
-          <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,.5)", textAlign: "right", lineHeight: 1.4 }}>
-            <strong style={{ color: "rgba(255,255,255,.8)" }}>🔒 Официальная организация</strong><br />
-            ОГРН 1242500028583 · ИНН 2502079223
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* HERO */}
-      <section style={{ background: "linear-gradient(135deg,var(--dark) 0%,var(--navy) 60%,#0F3460 100%)", color: "#fff", padding: "80px 0 72px", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: "linear-gradient(135deg,var(--dark) 0%,var(--navy) 60%,#0F3460 100%)", color: "#fff", padding: "80px 0 72px", paddingTop: "calc(80px + 60px)", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }} />
         <div className="c">
           <div className="hero-g" style={{ position: "relative", display: "grid", gridTemplateColumns: "1fr 420px", gap: 48, alignItems: "center" }}>
@@ -295,7 +281,7 @@ export default function Index() {
       </section>
 
       {/* MISSION */}
-      <div className="sec">
+      <div className="sec" id="mission">
         <div className="c">
           <div className="mg" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, alignItems: "start" }}>
             <div>
@@ -335,7 +321,7 @@ export default function Index() {
       </div>
 
       {/* HOW WE WORK */}
-      <div className="sec bg-r">
+      <div className="sec bg-r" id="how">
         <div className="c">
           <div className="shdr">
             <span className="lbl n">Как мы работаем</span>
@@ -383,7 +369,7 @@ export default function Index() {
       </div>
 
       {/* STORIES */}
-      <div className="sec bg-r">
+      <div className="sec bg-r" id="stories">
         <div className="c">
           <div className="shdr">
             <span className="lbl g">Живые истории</span>
@@ -498,10 +484,10 @@ export default function Index() {
       </div>
 
       {/* REPORTS */}
-      <ReportsBlock />
+      <div id="reports"><ReportsBlock /></div>
 
       {/* FAQ */}
-      <div className="sec">
+      <div className="sec" id="faq">
         <div className="c">
           <div className="shdr">
             <span className="lbl n">Частые вопросы</span>
