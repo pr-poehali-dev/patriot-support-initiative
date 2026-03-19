@@ -181,17 +181,14 @@ export default function ReportsBlock() {
             marginTop: 36,
             background: "var(--light)",
             borderRadius: 12,
-            padding: "20px 24px",
+            padding: "24px",
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: 16,
+            gap: 10,
+            textAlign: "center",
           }}
         >
-          <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--muted)", maxWidth: 480 }}>
-            Все отчёты и фотоальбомы — в нашем официальном сообществе ВКонтакте
-          </p>
           <a
             href="https://vk.ru/patriotdvprim"
             target="_blank"
@@ -199,7 +196,7 @@ export default function ReportsBlock() {
             style={{
               background: "var(--red)",
               color: "#fff",
-              padding: "10px 20px",
+              padding: "10px 24px",
               borderRadius: 8,
               textDecoration: "none",
               fontWeight: 700,
@@ -209,6 +206,9 @@ export default function ReportsBlock() {
           >
             Открыть все отчёты в VK →
           </a>
+          <p style={{ margin: 0, fontSize: "0.82rem", color: "var(--muted)" }}>
+            Все отчёты и фотоальбомы — в нашем официальном сообществе ВКонтакте
+          </p>
         </div>
       </div>
     </div>
