@@ -59,7 +59,7 @@ export default function ReportsBlock() {
   });
 
   return (
-    <div className="sec">
+    <div className="sec bg-r">
       <div className="c">
         <div className="shdr">
           <span className="lbl g">Отчёты</span>

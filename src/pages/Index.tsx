@@ -501,7 +501,7 @@ export default function Index() {
       <ReportsBlock />
 
       {/* FAQ */}
-      <div className="sec bg-r">
+      <div className="sec">
         <div className="c">
           <div className="shdr">
             <span className="lbl n">Частые вопросы</span>
