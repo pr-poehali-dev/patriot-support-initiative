@@ -14,7 +14,7 @@ const ITEMS = [
     title: "Передача гуманитарной помощи — видеорепортаж",
     text: "Как собранные посылки отправились к военнослужащим и их семьям.",
     stats: [{ l: "посылок", v: "28" }, { l: "мин", v: "4" }],
-    url: "https://vk.com/patriotdv",
+    url: "https://vk.ru/patriotdvprim",
   },
   {
     type: "photo",
@@ -29,7 +29,7 @@ const ITEMS = [
     title: "Итоги января — видеосводка акций по краю",
     text: "Сводный видеоотчёт о всех мероприятиях организации за месяц.",
     stats: [{ l: "акций", v: "6" }, { l: "мин", v: "7" }],
-    url: "https://vk.com/patriotdv",
+    url: "https://vk.ru/patriotdvprim",
   },
   {
     type: "photo",
@@ -193,7 +193,7 @@ export default function ReportsBlock() {
             Все отчёты и фотоальбомы — в нашем официальном сообществе ВКонтакте
           </p>
           <a
-            href="https://vk.com/patriotdv"
+            href="https://vk.ru/patriotdvprim"
             target="_blank"
             rel="noopener noreferrer"
             style={{
