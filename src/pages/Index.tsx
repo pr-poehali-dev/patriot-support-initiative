@@ -463,7 +463,7 @@ export default function Index() {
                 </div>
                 {showQr && (
                   <div style={{ marginTop: 14, textAlign: "center" }}>
-                    <img src="https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/e6cb1219-083e-46c8-9daa-44b72721b951.jpg" alt="QR-код для оплаты" style={{ width: 200, height: 200, borderRadius: 8, display: "block", margin: "0 auto" }} />
+                    <img src="https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/028938a9-d0c9-4c4a-a7c7-f707b0f3f3f3.png" alt="QR-код для оплаты" style={{ width: 200, height: 200, borderRadius: 8, display: "block", margin: "0 auto" }} />
                     <p style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: 8 }}>Наведите камеру телефона на QR-код для перехода к оплате</p>
                   </div>
                 )}
