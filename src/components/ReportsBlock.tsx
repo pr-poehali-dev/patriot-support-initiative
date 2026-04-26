@@ -1,12 +1,15 @@
 import { useState } from "react";
 
-const ITEMS = [
+type Item = { type: string; date: string; title: string; text: string; stats: { l: string; v: string }[]; url?: string; image?: string };
+
+const ITEMS: Item[] = [
   {
     type: "photo",
     date: "Март 2026 · г. Артём",
     title: "Волонтёрская мастерская — плетение маскировочных изделий",
-    text: "Рабочая суббота: школьники, пенсионеры и предприниматели за одним столом.",
+    text: "Коллектив Приморского государственного аграрно-технологического университета (ГАТУ) передал нам партию изготовленных сетей.",
     stats: [{ l: "участника", v: "34" }, { l: "изделий", v: "12" }],
+    image: "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/c594d149-7d1e-46c3-a134-8bb6c6bb01fb.jpg",
   },
   {
     type: "video",
@@ -105,10 +108,10 @@ export default function ReportsBlock() {
                 flexDirection: "column",
               }}
             >
-              {/* Placeholder header */}
+              {/* Header */}
               <div
                 style={{
-                  height: 120,
+                  height: 180,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -117,9 +120,18 @@ export default function ReportsBlock() {
                     ? "linear-gradient(135deg,#1a1a2e,#16213e)"
                     : "linear-gradient(135deg,#2E4A7A,#3A6098)",
                   position: "relative",
+                  overflow: "hidden",
                 }}
               >
-                {item.type === "video" ? "🎥" : "📷"}
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  />
+                ) : (
+                  item.type === "video" ? "🎥" : "📷"
+                )}
                 {item.type === "video" && (
                   <div style={{
                     position: "absolute",
