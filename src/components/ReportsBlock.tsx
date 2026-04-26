@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 
-type Item = { type: string; date: string; title: string; text: string; stats: { l: string; v: string }[]; url?: string; image?: string };
+type Item = { type: string; date: string; title: string; text: string; stats: { l: string; v: string }[]; url?: string; image?: string; images?: string[] };
 
 const ITEMS: Item[] = [
   {
@@ -22,10 +22,16 @@ const ITEMS: Item[] = [
   },
   {
     type: "photo",
-    date: "Февраль 2026 · Школа №14",
+    date: "Февраль 2026 · Школа №3, г. Артём",
     title: "Урок мужества с ветераном — фотоотчёт",
-    text: "Встреча ветерана с учениками 8–9 классов. Живая история — не по учебнику.",
+    text: "В городе Артёме, в стенах средней общеобразовательной школы №3, развернулась уникальная инициатива, ставшая ярким примером гражданской сознательности и патриотизма.\nПо инициативе депутата Думы Артёмовского городского округа, руководителя АНО \"ПАТРИОТ ДВ\" Алексея Михайленко, при активном содействии директора образовательного учреждения Валентины Александровны Ле, была проведена акция в поддержку военнослужащих, находящихся в зоне проведения Специальной Военной Операции. Основной акцент сделан на освоении техники плетения тактических браслетов – незаменимых аксессуаров для участников СВО.\n\nБраслет носится на руке и в случае необходимости превращается в верёвку длиной 4 метра, которая выдерживает нагрузку до 250 кг. Используется для транспортировки раненых, снятия взрывных устройств, спуска со второго этажа и тд.",
     stats: [{ l: "ученика", v: "62" }, { l: "класса", v: "2" }],
+    images: [
+      "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/d1773a5c-8423-4d35-903b-40cb7d9d09e2.jpg",
+      "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/c7a7565d-0f85-467b-ab8c-47dc9dad4d5c.jpg",
+      "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/5ef8a916-290b-4f12-8780-ce3184d996bb.jpg",
+      "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/7a1c63c8-4c59-459e-b8a9-cee4b9d82650.jpg",
+    ],
   },
   {
     type: "video",
@@ -52,6 +58,39 @@ const ITEMS: Item[] = [
 ];
 
 const TABS = ["📷 Фотоотчёты", "🎥 Видеоотчёты", "Все материалы"];
+
+function CardImage({ item, onLightbox }: { item: Item; onLightbox: (src: string) => void }) {
+  const [idx, setIdx] = useState(0);
+  const imgs = item.images ?? (item.image ? [item.image] : []);
+  if (imgs.length === 0) {
+    return (
+      <div style={{ height: 220, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2.8rem", background: item.type === "video" ? "linear-gradient(135deg,#1a1a2e,#16213e)" : "linear-gradient(135deg,#2E4A7A,#3A6098)" }}>
+        {item.type === "video" ? "🎥" : "📷"}
+      </div>
+    );
+  }
+  return (
+    <div style={{ position: "relative", height: 220, background: "#111", overflow: "hidden" }}>
+      <img
+        src={imgs[idx]}
+        alt={item.title}
+        onClick={() => onLightbox(imgs[idx])}
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", cursor: "zoom-in", transition: "opacity .3s" }}
+      />
+      {imgs.length > 1 && (
+        <>
+          <button onClick={(e) => { e.stopPropagation(); setIdx((idx - 1 + imgs.length) % imgs.length); }} style={{ position: "absolute", left: 6, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "none", color: "#fff", borderRadius: "50%", width: 28, height: 28, cursor: "pointer", fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center" }}>‹</button>
+          <button onClick={(e) => { e.stopPropagation(); setIdx((idx + 1) % imgs.length); }} style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "none", color: "#fff", borderRadius: "50%", width: 28, height: 28, cursor: "pointer", fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center" }}>›</button>
+          <div style={{ position: "absolute", bottom: 8, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 4 }}>
+            {imgs.map((_, i) => (
+              <div key={i} onClick={(e) => { e.stopPropagation(); setIdx(i); }} style={{ width: 6, height: 6, borderRadius: "50%", background: i === idx ? "#fff" : "rgba(255,255,255,0.45)", cursor: "pointer" }} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 export default function ReportsBlock() {
   const [tab, setTab] = useState(2);
@@ -112,51 +151,13 @@ export default function ReportsBlock() {
               }}
             >
               {/* Header */}
-              <div
-                style={{
-                  height: 180,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "2.8rem",
-                  background: item.type === "video"
-                    ? "linear-gradient(135deg,#1a1a2e,#16213e)"
-                    : "linear-gradient(135deg,#2E4A7A,#3A6098)",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
-              >
-                {item.image ? (
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    onClick={() => setLightbox(item.image!)}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", cursor: "zoom-in" }}
-                  />
-                ) : (
-                  item.type === "video" ? "🎥" : "📷"
-                )}
-                {item.type === "video" && (
-                  <div style={{
-                    position: "absolute",
-                    bottom: 8,
-                    right: 10,
-                    background: "rgba(255,255,255,0.15)",
-                    borderRadius: 4,
-                    padding: "2px 8px",
-                    fontSize: "0.7rem",
-                    color: "#fff",
-                  }}>
-                    ВИДЕО
-                  </div>
-                )}
-              </div>
+              <CardImage item={item} onLightbox={setLightbox} />
 
               {/* Body */}
               <div style={{ padding: "14px 16px", flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
                 <div style={{ fontSize: "0.72rem", color: "var(--muted)" }}>{item.date}</div>
                 <div style={{ fontWeight: 700, fontSize: "0.9rem", lineHeight: 1.4 }}>{item.title}</div>
-                <div style={{ fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.5 }}>{item.text}</div>
+                <div style={{ fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.5, whiteSpace: "pre-line" }}>{item.text}</div>
 
                 {/* Stats */}
                 <div style={{ display: "flex", gap: 16, marginTop: 8 }}>
