@@ -64,13 +64,13 @@ function CardImage({ item, onLightbox }: { item: Item; onLightbox: (src: string)
   const imgs = item.images ?? (item.image ? [item.image] : []);
   if (imgs.length === 0) {
     return (
-      <div style={{ height: 220, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2.8rem", background: item.type === "video" ? "linear-gradient(135deg,#1a1a2e,#16213e)" : "linear-gradient(135deg,#2E4A7A,#3A6098)" }}>
+      <div style={{ height: 180, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2.8rem", background: item.type === "video" ? "linear-gradient(135deg,#1a1a2e,#16213e)" : "linear-gradient(135deg,#2E4A7A,#3A6098)" }}>
         {item.type === "video" ? "🎥" : "📷"}
       </div>
     );
   }
   return (
-    <div style={{ position: "relative", height: 220, background: "#111", overflow: "hidden" }}>
+    <div style={{ position: "relative", height: 180, background: "#111", overflow: "hidden" }}>
       <img
         src={imgs[idx]}
         alt={item.title}
@@ -95,6 +95,7 @@ function CardImage({ item, onLightbox }: { item: Item; onLightbox: (src: string)
 export default function ReportsBlock() {
   const [tab, setTab] = useState(2);
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   const filtered = ITEMS.filter((item) => {
     if (tab === 0) return item.type === "photo";
@@ -151,13 +152,26 @@ export default function ReportsBlock() {
               }}
             >
               {/* Header */}
-              <CardImage item={item} onLightbox={setLightbox} />
+              <div style={{ position: "relative", overflow: "hidden" }}>
+                <CardImage item={item} onLightbox={setLightbox} />
+                {item.type === "video" && (
+                  <div style={{ position: "absolute", bottom: 8, right: 10, background: "rgba(255,255,255,0.15)", borderRadius: 4, padding: "2px 8px", fontSize: "0.7rem", color: "#fff" }}>ВИДЕО</div>
+                )}
+              </div>
 
               {/* Body */}
               <div style={{ padding: "14px 16px", flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
                 <div style={{ fontSize: "0.72rem", color: "var(--muted)" }}>{item.date}</div>
                 <div style={{ fontWeight: 700, fontSize: "0.9rem", lineHeight: 1.4 }}>{item.title}</div>
-                <div style={{ fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.5, whiteSpace: "pre-line" }}>{item.text}</div>
+                {expanded === item.title && (
+                  <div style={{ fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.5, whiteSpace: "pre-line" }}>{item.text}</div>
+                )}
+                <button
+                  onClick={() => setExpanded(expanded === item.title ? null : item.title)}
+                  style={{ alignSelf: "flex-start", background: "none", border: "none", padding: 0, fontSize: "0.78rem", color: "var(--red)", cursor: "pointer", fontFamily: "inherit" }}
+                >
+                  {expanded === item.title ? "Скрыть ▲" : "Подробнее ▼"}
+                </button>
 
                 {/* Stats */}
                 <div style={{ display: "flex", gap: 16, marginTop: 8 }}>
