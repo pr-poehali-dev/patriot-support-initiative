@@ -94,7 +94,7 @@ function CardImage({ item, onLightbox }: { item: Item; onLightbox: (src: string)
 
 export default function ReportsBlock() {
   const [tab, setTab] = useState(2);
-  const [lightbox, setLightbox] = useState<string | null>(null);
+  const [lightbox, setLightbox] = useState<{ imgs: string[]; idx: number } | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
 
   const filtered = ITEMS.filter((item) => {
@@ -153,7 +153,10 @@ export default function ReportsBlock() {
             >
               {/* Header */}
               <div style={{ position: "relative", overflow: "hidden" }}>
-                <CardImage item={item} onLightbox={setLightbox} />
+                <CardImage item={item} onLightbox={(src) => {
+                  const imgs = item.images ?? (item.image ? [item.image] : []);
+                  setLightbox({ imgs, idx: imgs.indexOf(src) });
+                }} />
                 {item.type === "video" && (
                   <div style={{ position: "absolute", bottom: 8, right: 10, background: "rgba(255,255,255,0.15)", borderRadius: 4, padding: "2px 8px", fontSize: "0.7rem", color: "#fff" }}>ВИДЕО</div>
                 )}
@@ -247,26 +250,34 @@ export default function ReportsBlock() {
     {lightbox && createPortal(
       <div
         onClick={() => setLightbox(null)}
-        style={{
-          position: "fixed", inset: 0, zIndex: 9999,
-          background: "rgba(0,0,0,0.85)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          cursor: "zoom-out",
-        }}
+        style={{ position: "fixed", inset: 0, zIndex: 9999, background: "rgba(0,0,0,0.88)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "zoom-out" }}
       >
         <img
-          src={lightbox}
+          src={lightbox.imgs[lightbox.idx]}
           alt=""
-          style={{ maxWidth: "92vw", maxHeight: "90vh", borderRadius: 10, boxShadow: "0 8px 40px rgba(0,0,0,0.6)" }}
+          onClick={(e) => e.stopPropagation()}
+          style={{ maxWidth: "88vw", maxHeight: "88vh", borderRadius: 10, boxShadow: "0 8px 40px rgba(0,0,0,0.6)", cursor: "default" }}
         />
+        {lightbox.imgs.length > 1 && (
+          <>
+            <button
+              onClick={(e) => { e.stopPropagation(); setLightbox({ ...lightbox, idx: (lightbox.idx - 1 + lightbox.imgs.length) % lightbox.imgs.length }); }}
+              style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", fontSize: "2rem", cursor: "pointer", borderRadius: "50%", width: 48, height: 48, display: "flex", alignItems: "center", justifyContent: "center" }}
+            >‹</button>
+            <button
+              onClick={(e) => { e.stopPropagation(); setLightbox({ ...lightbox, idx: (lightbox.idx + 1) % lightbox.imgs.length }); }}
+              style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", fontSize: "2rem", cursor: "pointer", borderRadius: "50%", width: 48, height: 48, display: "flex", alignItems: "center", justifyContent: "center" }}
+            >›</button>
+            <div style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 6 }}>
+              {lightbox.imgs.map((_, i) => (
+                <div key={i} onClick={(e) => { e.stopPropagation(); setLightbox({ ...lightbox, idx: i }); }} style={{ width: 8, height: 8, borderRadius: "50%", background: i === lightbox.idx ? "#fff" : "rgba(255,255,255,0.4)", cursor: "pointer" }} />
+              ))}
+            </div>
+          </>
+        )}
         <button
           onClick={() => setLightbox(null)}
-          style={{
-            position: "absolute", top: 16, right: 20,
-            background: "rgba(255,255,255,0.15)", border: "none",
-            color: "#fff", fontSize: "1.5rem", cursor: "pointer",
-            borderRadius: "50%", width: 40, height: 40, lineHeight: "40px", textAlign: "center",
-          }}
+          style={{ position: "absolute", top: 16, right: 20, background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", fontSize: "1.5rem", cursor: "pointer", borderRadius: "50%", width: 40, height: 40, display: "flex", alignItems: "center", justifyContent: "center" }}
         >×</button>
       </div>,
       document.body
