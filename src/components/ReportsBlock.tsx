@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 
 type Item = { type: string; date: string; title: string; text: string; stats: { l: string; v: string }[]; url?: string; image?: string };
 
@@ -54,6 +55,7 @@ const TABS = ["📷 Фотоотчёты", "🎥 Видеоотчёты", "Вс�
 
 export default function ReportsBlock() {
   const [tab, setTab] = useState(2);
+  const [lightbox, setLightbox] = useState<string | null>(null);
 
   const filtered = ITEMS.filter((item) => {
     if (tab === 0) return item.type === "photo";
@@ -62,6 +64,7 @@ export default function ReportsBlock() {
   });
 
   return (
+    <>
     <div className="sec bg-r">
       <div className="c">
         <div className="shdr">
@@ -127,7 +130,8 @@ export default function ReportsBlock() {
                   <img
                     src={item.image}
                     alt={item.title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                    onClick={() => setLightbox(item.image!)}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", cursor: "zoom-in" }}
                   />
                 ) : (
                   item.type === "video" ? "🎥" : "📷"
@@ -224,5 +228,34 @@ export default function ReportsBlock() {
         </div>
       </div>
     </div>
+
+    {lightbox && createPortal(
+      <div
+        onClick={() => setLightbox(null)}
+        style={{
+          position: "fixed", inset: 0, zIndex: 9999,
+          background: "rgba(0,0,0,0.85)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          cursor: "zoom-out",
+        }}
+      >
+        <img
+          src={lightbox}
+          alt=""
+          style={{ maxWidth: "92vw", maxHeight: "90vh", borderRadius: 10, boxShadow: "0 8px 40px rgba(0,0,0,0.6)" }}
+        />
+        <button
+          onClick={() => setLightbox(null)}
+          style={{
+            position: "absolute", top: 16, right: 20,
+            background: "rgba(255,255,255,0.15)", border: "none",
+            color: "#fff", fontSize: "1.5rem", cursor: "pointer",
+            borderRadius: "50%", width: 40, height: 40, lineHeight: "40px", textAlign: "center",
+          }}
+        >×</button>
+      </div>,
+      document.body
+    )}
+    </>
   );
 }
