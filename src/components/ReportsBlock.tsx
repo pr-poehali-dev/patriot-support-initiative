@@ -36,7 +36,6 @@ const ITEMS: Item[] = [
       "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/c7a7565d-0f85-467b-ab8c-47dc9dad4d5c.jpg",
       "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/5ef8a916-290b-4f12-8780-ce3184d996bb.jpg",
       "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/7a1c63c8-4c59-459e-b8a9-cee4b9d82650.jpg",
-      "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/662bf541-87f9-4f22-a6f1-409b0c48ff01.jpg",
     ],
   },
   {
