@@ -61,11 +61,12 @@ const ITEMS: Item[] = [
     ],
   },
   {
-    type: "photo",
+    type: "video",
     date: "Декабрь 2025 · г. Артём",
     title: "Новогодняя гуманитарная акция — сбор посылок",
     text: "Жители Приморья собрали праздничные посылки для семей военнослужащих.",
     stats: [{ l: "посылок", v: "47" }, { l: "волонтёр", v: "51" }],
+    url: "https://vk.com/video_ext.php?oid=893941164&id=456239056&hash=c7e8f4036bfcee96",
   },
 ];
 
@@ -198,23 +199,37 @@ export default function ReportsBlock() {
                   ))}
                 </div>
 
-                {/* Video link */}
+                {/* Video embed or link */}
                 {item.url && (
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      marginTop: 10,
-                      display: "inline-block",
-                      fontSize: "0.8rem",
-                      color: "var(--red)",
-                      fontWeight: 600,
-                      textDecoration: "none",
-                    }}
-                  >
-                    Смотреть в VK →
-                  </a>
+                  item.url.includes("vk.com/video_ext") ? (
+                    <div style={{ marginTop: 10, borderRadius: 8, overflow: "hidden", aspectRatio: "16/9" }}>
+                      <iframe
+                        src={item.url}
+                        width="100%"
+                        height="100%"
+                        frameBorder="0"
+                        allowFullScreen
+                        style={{ background: "#000", display: "block" }}
+                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+                      />
+                    </div>
+                  ) : (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        marginTop: 10,
+                        display: "inline-block",
+                        fontSize: "0.8rem",
+                        color: "var(--red)",
+                        fontWeight: 600,
+                        textDecoration: "none",
+                      }}
+                    >
+                      Смотреть в VK →
+                    </a>
+                  )
                 )}
               </div>
             </div>
