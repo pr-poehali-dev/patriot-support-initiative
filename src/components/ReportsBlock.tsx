@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
 
 type Item = { type: string; date: string; title: string; text: string; stats: { l: string; v: string }[]; url?: string; image?: string; images?: string[] };
@@ -72,10 +72,43 @@ const ITEMS: Item[] = [
 
 const TABS = ["📷 Фотоотчёты", "🎥 Видеоотчёты", "Все материалы"];
 
+function VideoThumb({ item }: { item: Item }) {
+  const [playing, setPlaying] = useState(false);
+  if (playing) {
+    return (
+      <div style={{ height: 180, background: "#000" }}>
+        <iframe
+          src={item.url + "&autoplay=1"}
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          allowFullScreen
+          style={{ display: "block" }}
+          allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+        />
+      </div>
+    );
+  }
+  return (
+    <div
+      onClick={() => setPlaying(true)}
+      style={{ height: 180, background: "linear-gradient(135deg,#1a1a2e,#16213e)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", position: "relative" }}
+    >
+      <div style={{ width: 56, height: 56, borderRadius: "50%", background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", transition: "background .2s" }}>
+        <div style={{ width: 0, height: 0, borderTop: "12px solid transparent", borderBottom: "12px solid transparent", borderLeft: "20px solid #fff", marginLeft: 4 }} />
+      </div>
+      <div style={{ position: "absolute", bottom: 8, right: 10, background: "rgba(255,255,255,0.15)", borderRadius: 4, padding: "2px 8px", fontSize: "0.7rem", color: "#fff" }}>ВИДЕО</div>
+    </div>
+  );
+}
+
 function CardImage({ item, onLightbox }: { item: Item; onLightbox: (src: string) => void }) {
   const [idx, setIdx] = useState(0);
   const imgs = item.images ?? (item.image ? [item.image] : []);
   if (imgs.length === 0) {
+    if (item.type === "video" && item.url?.includes("vk.com/video_ext")) {
+      return <VideoThumb item={item} />;
+    }
     return (
       <div style={{ height: 180, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2.8rem", background: item.type === "video" ? "linear-gradient(135deg,#1a1a2e,#16213e)" : "linear-gradient(135deg,#2E4A7A,#3A6098)" }}>
         {item.type === "video" ? "🎥" : "📷"}
@@ -170,7 +203,7 @@ export default function ReportsBlock() {
                   const imgs = item.images ?? (item.image ? [item.image] : []);
                   setLightbox({ imgs, idx: imgs.indexOf(src) });
                 }} />
-                {item.type === "video" && (
+                {item.type === "video" && !item.url?.includes("vk.com/video_ext") && (
                   <div style={{ position: "absolute", bottom: 8, right: 10, background: "rgba(255,255,255,0.15)", borderRadius: 4, padding: "2px 8px", fontSize: "0.7rem", color: "#fff" }}>ВИДЕО</div>
                 )}
               </div>
@@ -199,37 +232,23 @@ export default function ReportsBlock() {
                   ))}
                 </div>
 
-                {/* Video embed or link */}
-                {item.url && (
-                  item.url.includes("vk.com/video_ext") ? (
-                    <div style={{ marginTop: 10, borderRadius: 8, overflow: "hidden", aspectRatio: "16/9" }}>
-                      <iframe
-                        src={item.url}
-                        width="100%"
-                        height="100%"
-                        frameBorder="0"
-                        allowFullScreen
-                        style={{ background: "#000", display: "block" }}
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-                      />
-                    </div>
-                  ) : (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        marginTop: 10,
-                        display: "inline-block",
-                        fontSize: "0.8rem",
-                        color: "var(--red)",
-                        fontWeight: 600,
-                        textDecoration: "none",
-                      }}
-                    >
-                      Смотреть в VK →
-                    </a>
-                  )
+                {/* Video link (only for non-embed videos) */}
+                {item.url && !item.url.includes("vk.com/video_ext") && (
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      marginTop: 10,
+                      display: "inline-block",
+                      fontSize: "0.8rem",
+                      color: "var(--red)",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                    }}
+                  >
+                    Смотреть в VK →
+                  </a>
                 )}
               </div>
             </div>
