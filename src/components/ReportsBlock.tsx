@@ -10,7 +10,12 @@ const ITEMS: Item[] = [
     title: "Волонтёрская мастерская — плетение маскировочных изделий",
     text: "Коллектив Приморского государственного аграрно-технологического университета (ГАТУ) передал нам партию изготовленных сетей.",
     stats: [{ l: "участника", v: "34" }, { l: "изделий", v: "12" }],
-    image: "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/c594d149-7d1e-46c3-a134-8bb6c6bb01fb.jpg",
+    images: [
+      "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/c594d149-7d1e-46c3-a134-8bb6c6bb01fb.jpg",
+      "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/2ceb7938-2f57-479d-b389-c8b89c86e780.jpg",
+      "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/985fb507-05f8-48cc-a4c0-be47548e2f12.jpg",
+      "https://cdn.poehali.dev/projects/288ea0fa-c5c5-44d8-97d3-8a430533290a/bucket/61e7c463-ea90-45b6-a770-af2a3992024f.jpg",
+    ],
   },
   {
     type: "video",
