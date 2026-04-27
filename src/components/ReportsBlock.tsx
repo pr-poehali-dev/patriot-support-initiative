@@ -73,32 +73,48 @@ const ITEMS: Item[] = [
 const TABS = ["📷 Фотоотчёты", "🎥 Видеоотчёты", "Все материалы"];
 
 function VideoThumb({ item }: { item: Item }) {
-  const [playing, setPlaying] = useState(false);
-  if (playing) {
-    return (
-      <div style={{ height: 180, background: "#000" }}>
-        <iframe
-          src={item.url + "&autoplay=1"}
-          width="100%"
-          height="100%"
-          frameBorder="0"
-          allowFullScreen
-          style={{ display: "block" }}
-          allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-        />
-      </div>
-    );
-  }
+  const [modal, setModal] = useState(false);
+
   return (
-    <div
-      onClick={() => setPlaying(true)}
-      style={{ height: 180, background: "linear-gradient(135deg,#1a1a2e,#16213e)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", position: "relative" }}
-    >
-      <div style={{ width: 56, height: 56, borderRadius: "50%", background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", transition: "background .2s" }}>
-        <div style={{ width: 0, height: 0, borderTop: "12px solid transparent", borderBottom: "12px solid transparent", borderLeft: "20px solid #fff", marginLeft: 4 }} />
+    <>
+      {/* Заглушка в карточке */}
+      <div
+        onClick={() => setModal(true)}
+        style={{ height: 180, background: "linear-gradient(135deg,#1a1a2e,#16213e)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", position: "relative" }}
+      >
+        <div style={{ width: 56, height: 56, borderRadius: "50%", background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ width: 0, height: 0, borderTop: "12px solid transparent", borderBottom: "12px solid transparent", borderLeft: "20px solid #fff", marginLeft: 4 }} />
+        </div>
+        <div style={{ position: "absolute", bottom: 8, right: 10, background: "rgba(255,255,255,0.15)", borderRadius: 4, padding: "2px 8px", fontSize: "0.7rem", color: "#fff" }}>ВИДЕО</div>
       </div>
-      <div style={{ position: "absolute", bottom: 8, right: 10, background: "rgba(255,255,255,0.15)", borderRadius: 4, padding: "2px 8px", fontSize: "0.7rem", color: "#fff" }}>ВИДЕО</div>
-    </div>
+
+      {/* Модальное окно */}
+      {modal && createPortal(
+        <div
+          onClick={() => setModal(false)}
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.88)", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+        >
+          <div onClick={(e) => e.stopPropagation()} style={{ width: "100%", maxWidth: 860, position: "relative" }}>
+            <button
+              onClick={() => setModal(false)}
+              style={{ position: "absolute", top: -36, right: 0, background: "none", border: "none", color: "#fff", fontSize: "1.6rem", cursor: "pointer", lineHeight: 1 }}
+            >✕</button>
+            <div style={{ aspectRatio: "16/9", background: "#000", borderRadius: 10, overflow: "hidden" }}>
+              <iframe
+                src={item.url + "&autoplay=1"}
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                allowFullScreen
+                style={{ display: "block" }}
+                allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+              />
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+    </>
   );
 }
 
